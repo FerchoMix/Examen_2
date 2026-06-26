@@ -1,0 +1,4 @@
+flask-appbuilder
+flask-sqlalchemy
+email-validator
+PyMySQL

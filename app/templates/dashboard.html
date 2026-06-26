@@ -1,0 +1,158 @@
+{% extends "appbuilder/base.html" %}
+{% block head_css %}
+{{ super() }}
+<style>
+.hero-panel {
+  color: white;
+  padding: 36px;
+  border-radius: 18px;
+  background: linear-gradient(rgba(9, 34, 58, 0.72), rgba(16, 83, 115, 0.72)),
+    url('https://images.pexels.com/photos/4489734/pexels-photo-4489734.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+  box-shadow: 0 12px 24px rgba(0,0,0,.18);
+  margin-bottom: 24px;
+}
+.metric-card {
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  padding: 18px;
+  min-height: 130px;
+  background: white;
+}
+.metric-number {
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 10px;
+}
+.dashboard-card {
+  border: 0;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.quick-link {
+  display:inline-block; margin-right:10px; margin-top:10px;
+}
+.table-dashboard td, .table-dashboard th { vertical-align: middle !important; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="hero-panel">
+    <h1 style="margin-top:0; font-weight:700;">Panel de control del taller mecánico</h1>
+    <p style="font-size:16px; max-width:760px;">
+      Bienvenido al sistema web del taller. Desde aquí puedes visualizar indicadores clave,
+      revisar órdenes de trabajo, analizar ingresos y consultar el estado de la operación.
+    </p>
+    <a href="/ordentrabajoview/list/" class="btn btn-warning quick-link"><i class="fa fa-clipboard"></i> Ver órdenes</a>
+    <a href="/pagoview/list/" class="btn btn-success quick-link"><i class="fa fa-money"></i> Ver pagos</a>
+    <a href="/repuestoview/list/" class="btn btn-info quick-link"><i class="fa fa-archive"></i> Ver repuestos</a>
+  </div>
+
+  <div class="row">
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Total clientes</small><div class="metric-number">{{ total_clientes }}</div></div></div>
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Vehículos</small><div class="metric-number">{{ total_vehiculos }}</div></div></div>
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Mecánicos</small><div class="metric-number">{{ total_mecanicos }}</div></div></div>
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Órdenes activas</small><div class="metric-number">{{ ordenes_activas }}</div></div></div>
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Stock bajo</small><div class="metric-number">{{ stock_bajo }}</div></div></div>
+    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Ingresos</small><div class="metric-number">Bs {{ '%.2f'|format(ingresos) }}</div></div></div>
+  </div>
+
+  <div class="row" style="margin-top:18px;">
+    <div class="col-md-7">
+      <div class="dashboard-card">
+        <h3 style="margin-top:0;">Órdenes por servicio</h3>
+        <p class="text-muted">Resumen visual de los servicios con mayor demanda.</p>
+        <canvas id="chartServicios" height="120"></canvas>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="dashboard-card">
+        <h3 style="margin-top:0;">Ingresos por método de pago</h3>
+        <p class="text-muted">Distribución de pagos registrados en el sistema.</p>
+        <canvas id="chartPagos" height="150"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="dashboard-card">
+        <h3 style="margin-top:0;">Órdenes recientes</h3>
+        <div class="table-responsive">
+          <table class="table table-hover table-dashboard">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fecha de ingreso</th>
+                <th>Vehículo</th>
+                <th>Servicio</th>
+                <th>Mecánico</th>
+                <th>Estado</th>
+                <th>Total estimado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for orden in ordenes_recientes %}
+              <tr>
+                <td>{{ orden.id }}</td>
+                <td>{{ orden.fecha_ingreso }}</td>
+                <td>{{ orden.vehiculo }}</td>
+                <td>{{ orden.servicio }}</td>
+                <td>{{ orden.mecanico }}</td>
+                <td>
+                  {% if orden.estado == 'Terminado' %}
+                    <span class="label label-success">{{ orden.estado }}</span>
+                  {% elif orden.estado == 'En proceso' %}
+                    <span class="label label-warning">{{ orden.estado }}</span>
+                  {% else %}
+                    <span class="label label-default">{{ orden.estado }}</span>
+                  {% endif %}
+                </td>
+                <td>Bs {{ orden.total_orden }}</td>
+              </tr>
+              {% else %}
+              <tr><td colspan="7" class="text-center">No existen órdenes registradas.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const serviciosLabels = {{ servicios_labels|safe }};
+const serviciosValues = {{ servicios_values|safe }};
+const pagosLabels = {{ pagos_labels|safe }};
+const pagosValues = {{ pagos_values|safe }};
+
+new Chart(document.getElementById('chartServicios'), {
+  type: 'bar',
+  data: {
+    labels: serviciosLabels,
+    datasets: [{
+      label: 'Órdenes',
+      data: serviciosValues,
+      backgroundColor: ['#1abc9c', '#3498db', '#9b59b6', '#f39c12', '#e74c3c']
+    }]
+  },
+  options: { responsive: true, plugins: { legend: { display: false } } }
+});
+
+new Chart(document.getElementById('chartPagos'), {
+  type: 'doughnut',
+  data: {
+    labels: pagosLabels,
+    datasets: [{
+      data: pagosValues,
+      backgroundColor: ['#16a085', '#2980b9', '#8e44ad', '#d35400', '#c0392b']
+    }]
+  },
+  options: { responsive: true }
+});
+</script>
+{% endblock %}

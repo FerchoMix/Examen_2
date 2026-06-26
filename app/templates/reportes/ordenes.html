@@ -1,0 +1,45 @@
+{% extends "appbuilder/base.html" %}
+{% block head_css %}
+{{ super() }}
+<style>
+.report-hero {
+  color: white; padding: 26px; border-radius: 18px; margin-bottom: 18px;
+  background: linear-gradient(rgba(14, 48, 79, 0.74), rgba(23, 111, 150, 0.74)),
+    url('https://images.pexels.com/photos/6870322/pexels-photo-6870322.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+}
+.report-card { background:#fff; border-radius:18px; box-shadow:0 10px 24px rgba(0,0,0,.08); padding:20px; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="report-hero">
+    <h2 style="margin-top:0; font-weight:700;">Reporte de órdenes de trabajo</h2>
+    <p>Consulta detallada de las órdenes registradas en el taller mecánico.</p>
+    <span class="label label-primary">Registros: {{ total_registros }}</span>
+    <span class="label label-success">Mano de obra total: Bs {{ total_mano_obra }}</span>
+  </div>
+  <div class="report-card table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>ID</th><th>Fecha</th><th>Vehículo</th><th>Cliente</th><th>Mecánico</th><th>Servicio</th><th>Estado</th><th>Mano de obra</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td>{{ r.id }}</td>
+          <td>{{ r.fecha_ingreso }}</td>
+          <td>{{ r.vehiculo }}</td>
+          <td>{{ r.vehiculo.cliente }}</td>
+          <td>{{ r.mecanico }}</td>
+          <td>{{ r.servicio }}</td>
+          <td>{{ r.estado }}</td>
+          <td>Bs {{ r.costo_mano_obra }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

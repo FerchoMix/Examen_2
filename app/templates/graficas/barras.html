@@ -1,0 +1,23 @@
+{% extends "appbuilder/base.html" %}
+{% block content %}
+<div class="container-fluid">
+  <h2>{{ titulo }}</h2>
+  <p>Gráfica de barras generada con datos reales de la base de datos.</p>
+  {% set maximo = (data | map(attribute=1) | list | max) if data else 1 %}
+  <div style="max-width: 900px;">
+    {% for nombre, valor in data %}
+      {% set ancho = ((valor|float) / (maximo|float) * 100) if maximo else 0 %}
+      <div style="margin: 15px 0;">
+        <b>{{ nombre }}</b> — {{ valor }}
+        <div style="height: 28px; background:#eee; border-radius: 5px; overflow:hidden;">
+          <div style="height: 28px; width: {{ ancho }}%; background:#337ab7; color:white; padding-left:8px; line-height:28px;">
+            {{ valor }}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="alert alert-warning">Todavía no hay datos suficientes para graficar.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
