@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 
 from flask_appbuilder import Model
@@ -147,3 +147,15 @@ class Pago(Model):
 
     def __repr__(self):
         return f"Pago Bs {self.monto} - Orden {self.orden_id}"
+
+class ConsultaIA(Model):
+    __tablename__ = "consultas_ia"
+
+    id = Column(Integer, primary_key=True)
+    fecha = Column(DateTime, nullable=False, default=datetime.utcnow)
+    pregunta = Column(Text, nullable=False)
+    respuesta = Column(Text, nullable=False)
+    usuario = Column(String(80))
+
+    def __repr__(self):
+        return f"Consulta IA #{self.id}"
