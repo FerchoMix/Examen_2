@@ -24,8 +24,8 @@ AUTH_ROLE_ADMIN = "Admin"
 AUTH_ROLE_PUBLIC = "Public"
 APP_NAME = "Sistema Taller Mecánico"
 APP_THEME = "yeti.css"
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
-OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-5.5")
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2")
 
 # Admin: acceso total automático de Flask-AppBuilder.
 # Supervisor: gestión operativa y reportes/gráficas.
