@@ -2,3 +2,5 @@ flask-appbuilder
 flask-sqlalchemy
 email-validator
 PyMySQL
+openai
+python-dotenv
