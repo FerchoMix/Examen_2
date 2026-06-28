@@ -1,0 +1,72 @@
+{% extends "appbuilder/base.html" %}
+
+{% block head_css %}
+{{ super() }}
+<style>
+.ia-hero {
+  color: white;
+  padding: 28px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  background: linear-gradient(rgba(12, 40, 70, .82), rgba(36, 117, 148, .82)),
+    url('https://images.pexels.com/photos/8294605/pexels-photo-8294605.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+}
+
+.ia-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.ia-respuesta {
+  white-space: pre-wrap;
+  background: #f7f9fb;
+  border-left: 5px solid #3498db;
+  padding: 16px;
+  border-radius: 10px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <div class="ia-hero">
+    <h2 style="margin-top:0; font-weight:700;">Asistente IA del taller</h2>
+    <p>Pregunta sobre diagnósticos preliminares, órdenes, repuestos, pagos o atención al cliente.</p>
+  </div>
+
+  <div class="ia-card">
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="form-group">
+        <label for="pregunta">Escribe tu consulta</label>
+        <textarea
+          name="pregunta"
+          id="pregunta"
+          class="form-control"
+          rows="5"
+          placeholder="Ejemplo: ¿Cómo organizo una orden por falla de frenos?"
+          required>{{ pregunta or '' }}</textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit">
+        <i class="fa fa-magic"></i> Consultar IA
+      </button>
+
+      <a href="/consultaia/list/" class="btn btn-default">Ver historial</a>
+    </form>
+  </div>
+
+  {% if respuesta %}
+  <div class="ia-card">
+    <h3 style="margin-top:0;">Respuesta</h3>
+    <div class="ia-respuesta">{{ respuesta }}</div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
