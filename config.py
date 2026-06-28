@@ -1,6 +1,8 @@
 import os
+from dotenv import load_dotenv
 from flask_appbuilder.security.manager import AUTH_DB
 
+load_dotenv()
 
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "clave-examen-taller-mecanico-2026")
@@ -22,7 +24,8 @@ AUTH_ROLE_ADMIN = "Admin"
 AUTH_ROLE_PUBLIC = "Public"
 APP_NAME = "Sistema Taller Mecánico"
 APP_THEME = "yeti.css"
-
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-5.5")
 
 # Admin: acceso total automático de Flask-AppBuilder.
 # Supervisor: gestión operativa y reportes/gráficas.
