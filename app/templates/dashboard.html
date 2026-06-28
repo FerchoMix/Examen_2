@@ -1,158 +1,435 @@
 {% extends "appbuilder/base.html" %}
+
 {% block head_css %}
 {{ super() }}
 <style>
-.hero-panel {
-  color: white;
-  padding: 36px;
-  border-radius: 18px;
-  background: linear-gradient(rgba(9, 34, 58, 0.72), rgba(16, 83, 115, 0.72)),
-    url('https://images.pexels.com/photos/4489734/pexels-photo-4489734.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
-  box-shadow: 0 12px 24px rgba(0,0,0,.18);
-  margin-bottom: 24px;
+.dashboard-wrapper {
+    padding: 24px 12px 45px;
 }
-.metric-card {
-  border: 0;
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
-  padding: 18px;
-  min-height: 130px;
-  background: white;
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 34px;
+    margin-bottom: 26px;
+    color: #ffffff;
+    background: linear-gradient(120deg, rgba(4, 33, 54, .90), rgba(0, 137, 167, .78)),
+        url("https://images.pexels.com/photos/3807386/pexels-photo-3807386.jpeg?auto=compress&cs=tinysrgb&w=1600") center center / cover no-repeat;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
 }
-.metric-number {
-  font-size: 30px;
-  font-weight: 700;
-  margin-top: 10px;
+
+.dashboard-hero h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 800;
 }
-.dashboard-card {
-  border: 0;
-  border-radius: 16px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
+
+.dashboard-hero p {
+    margin-top: 10px;
+    max-width: 720px;
+    font-size: 16px;
+    opacity: .94;
 }
-.quick-link {
-  display:inline-block; margin-right:10px; margin-top:10px;
+
+.hero-actions {
+    margin-top: 22px;
 }
-.table-dashboard td, .table-dashboard th { vertical-align: middle !important; }
+
+.hero-actions a {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .08);
+    border: 1px solid #edf1f5;
+}
+
+.stat-card .icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    border-radius: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #ffffff;
+    font-size: 19px;
+    background: linear-gradient(135deg, #008fb3, #00b894);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.stat-card p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.dashboard-section {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .07);
+    border: 1px solid #edf1f5;
+}
+
+.dashboard-section h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #102033;
+    font-weight: 800;
+    font-size: 22px;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.chart-box {
+    min-height: 320px;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(170px, 1fr));
+    gap: 18px;
+}
+
+.module-card {
+    display: block;
+    padding: 22px;
+    border-radius: 20px;
+    background: #f8fafc;
+    border: 1px solid #edf1f5;
+    text-decoration: none !important;
+    color: #0f172a;
+    transition: all .18s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, .12);
+    background: #ffffff;
+}
+
+.module-card i {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    border-radius: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #ffffff;
+    font-size: 18px;
+    background: linear-gradient(135deg, #1f6feb, #00b894);
+}
+
+.module-card strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.module-card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.table-modern {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table-modern th {
+    color: #475569;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.table-modern td {
+    vertical-align: middle !important;
+}
+
+.badge-alerta {
+    background: #ef4444;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 999px;
+}
+
+.badge-ok {
+    background: #10b981;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 999px;
+}
+
+@media (max-width: 1100px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-grid,
+    .modules-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .stat-grid,
+    .chart-grid,
+    .modules-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-hero {
+        padding: 26px;
+    }
+}
 </style>
 {% endblock %}
+
 {% block content %}
-<div class="container-fluid">
-  <div class="hero-panel">
-    <h1 style="margin-top:0; font-weight:700;">Panel de control del taller mecánico</h1>
-    <p style="font-size:16px; max-width:760px;">
-      Bienvenido al sistema web del taller. Desde aquí puedes visualizar indicadores clave,
-      revisar órdenes de trabajo, analizar ingresos y consultar el estado de la operación.
-    </p>
-    <a href="/ordentrabajoview/list/" class="btn btn-warning quick-link"><i class="fa fa-clipboard"></i> Ver órdenes</a>
-    <a href="/pagoview/list/" class="btn btn-success quick-link"><i class="fa fa-money"></i> Ver pagos</a>
-    <a href="/repuestoview/list/" class="btn btn-info quick-link"><i class="fa fa-archive"></i> Ver repuestos</a>
-  </div>
+<div class="container-fluid dashboard-wrapper">
 
-  <div class="row">
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Total clientes</small><div class="metric-number">{{ total_clientes }}</div></div></div>
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Vehículos</small><div class="metric-number">{{ total_vehiculos }}</div></div></div>
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Mecánicos</small><div class="metric-number">{{ total_mecanicos }}</div></div></div>
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Órdenes activas</small><div class="metric-number">{{ ordenes_activas }}</div></div></div>
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Stock bajo</small><div class="metric-number">{{ stock_bajo }}</div></div></div>
-    <div class="col-md-2 col-sm-6"><div class="metric-card"><small>Ingresos</small><div class="metric-number">Bs {{ '%.2f'|format(ingresos) }}</div></div></div>
-  </div>
+    <div class="dashboard-hero">
+        <h1>Panel Principal del Taller</h1>
+        <p>
+            Bienvenido al centro de control. Desde aquí puedes revisar el estado del taller,
+            entrar a los módulos principales, controlar inventario y consultar el asistente IA.
+        </p>
 
-  <div class="row" style="margin-top:18px;">
-    <div class="col-md-7">
-      <div class="dashboard-card">
-        <h3 style="margin-top:0;">Órdenes por servicio</h3>
-        <p class="text-muted">Resumen visual de los servicios con mayor demanda.</p>
-        <canvas id="chartServicios" height="120"></canvas>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="dashboard-card">
-        <h3 style="margin-top:0;">Ingresos por método de pago</h3>
-        <p class="text-muted">Distribución de pagos registrados en el sistema.</p>
-        <canvas id="chartPagos" height="150"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="dashboard-card">
-        <h3 style="margin-top:0;">Órdenes recientes</h3>
-        <div class="table-responsive">
-          <table class="table table-hover table-dashboard">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Fecha de ingreso</th>
-                <th>Vehículo</th>
-                <th>Servicio</th>
-                <th>Mecánico</th>
-                <th>Estado</th>
-                <th>Total estimado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for orden in ordenes_recientes %}
-              <tr>
-                <td>{{ orden.id }}</td>
-                <td>{{ orden.fecha_ingreso }}</td>
-                <td>{{ orden.vehiculo }}</td>
-                <td>{{ orden.servicio }}</td>
-                <td>{{ orden.mecanico }}</td>
-                <td>
-                  {% if orden.estado == 'Terminado' %}
-                    <span class="label label-success">{{ orden.estado }}</span>
-                  {% elif orden.estado == 'En proceso' %}
-                    <span class="label label-warning">{{ orden.estado }}</span>
-                  {% else %}
-                    <span class="label label-default">{{ orden.estado }}</span>
-                  {% endif %}
-                </td>
-                <td>Bs {{ orden.total_orden }}</td>
-              </tr>
-              {% else %}
-              <tr><td colspan="7" class="text-center">No existen órdenes registradas.</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <div class="hero-actions">
+            <a href="/ordentrabajoview/list/" class="btn btn-success">
+                <i class="fa fa-wrench"></i> Ver órdenes
+            </a>
+            <a href="/repuestoview/list/" class="btn btn-info">
+                <i class="fa fa-cogs"></i> Ver repuestos
+            </a>
+            <a href="/asistente-ia/" class="btn btn-primary">
+                <i class="fa fa-magic"></i> Asistente IA
+            </a>
         </div>
-      </div>
     </div>
-  </div>
+
+    <div class="stat-grid">
+        <div class="stat-card">
+            <div class="icon"><i class="fa fa-users"></i></div>
+            <h3>{{ total_clientes }}</h3>
+            <p>Clientes</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon"><i class="fa fa-car"></i></div>
+            <h3>{{ total_vehiculos }}</h3>
+            <p>Vehículos</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon"><i class="fa fa-user"></i></div>
+            <h3>{{ total_mecanicos }}</h3>
+            <p>Mecánicos</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon"><i class="fa fa-wrench"></i></div>
+            <h3>{{ ordenes_activas }}</h3>
+            <p>Órdenes activas</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="icon"><i class="fa fa-warning"></i></div>
+            <h3>{{ stock_bajo }}</h3>
+            <p>Stock bajo</p>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
+        <h2><i class="fa fa-th-large"></i> Módulos principales</h2>
+
+        <div class="modules-grid">
+            <a href="/clienteview/list/" class="module-card">
+                <i class="fa fa-users"></i>
+                <strong>Clientes</strong>
+                <span>Gestiona datos de clientes.</span>
+            </a>
+
+            <a href="/vehiculoview/list/" class="module-card">
+                <i class="fa fa-car"></i>
+                <strong>Vehículos</strong>
+                <span>Controla vehículos registrados.</span>
+            </a>
+
+            <a href="/ordentrabajoview/list/" class="module-card">
+                <i class="fa fa-wrench"></i>
+                <strong>Órdenes</strong>
+                <span>Revisa trabajos del taller.</span>
+            </a>
+
+            <a href="/repuestoview/list/" class="module-card">
+                <i class="fa fa-cogs"></i>
+                <strong>Repuestos</strong>
+                <span>Controla inventario y stock.</span>
+            </a>
+
+            <a href="/pagoview/list/" class="module-card">
+                <i class="fa fa-money"></i>
+                <strong>Pagos</strong>
+                <span>Consulta ingresos y métodos.</span>
+            </a>
+
+            <a href="/mecanicoview/list/" class="module-card">
+                <i class="fa fa-user"></i>
+                <strong>Mecánicos</strong>
+                <span>Administra personal técnico.</span>
+            </a>
+
+            <a href="/servicioview/list/" class="module-card">
+                <i class="fa fa-list"></i>
+                <strong>Servicios</strong>
+                <span>Catálogo de servicios.</span>
+            </a>
+
+            <a href="/asistente-ia/" class="module-card">
+                <i class="fa fa-magic"></i>
+                <strong>Asistente IA</strong>
+                <span>Consulta diagnósticos y stock.</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="dashboard-section chart-box">
+            <h2><i class="fa fa-bar-chart"></i> Órdenes por servicio</h2>
+            <canvas id="serviciosChart"></canvas>
+        </div>
+
+        <div class="dashboard-section chart-box">
+            <h2><i class="fa fa-pie-chart"></i> Ingresos por método de pago</h2>
+            <canvas id="pagosChart"></canvas>
+        </div>
+    </div>
+
+    <div class="chart-grid">
+        <div class="dashboard-section">
+            <h2><i class="fa fa-warning"></i> Repuestos con stock bajo</h2>
+
+            {% if repuestos_bajos %}
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th>Repuesto</th>
+                        <th>Stock</th>
+                        <th>Sugerencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for repuesto in repuestos_bajos %}
+                    <tr>
+                        <td>{{ repuesto.nombre }}</td>
+                        <td><span class="badge-alerta">{{ repuesto.stock }}</span></td>
+                        <td>Comprar o reponer pronto</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p><span class="badge-ok">OK</span> No hay repuestos con stock bajo.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-section">
+            <h2><i class="fa fa-clock-o"></i> Órdenes recientes</h2>
+
+            {% if ordenes_recientes %}
+            <table class="table table-modern">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orden in ordenes_recientes %}
+                    <tr>
+                        <td>#{{ orden.id }}</td>
+                        <td>{{ orden.estado }}</td>
+                        <td>{{ orden.fecha_ingreso }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No existen órdenes registradas todavía.</p>
+            {% endif %}
+        </div>
+    </div>
+
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const serviciosLabels = {{ servicios_labels|safe }};
-const serviciosValues = {{ servicios_values|safe }};
-const pagosLabels = {{ pagos_labels|safe }};
-const pagosValues = {{ pagos_values|safe }};
+const serviciosLabels = {{ servicios_labels | safe }};
+const serviciosValues = {{ servicios_values | safe }};
+const pagosLabels = {{ pagos_labels | safe }};
+const pagosValues = {{ pagos_values | safe }};
 
-new Chart(document.getElementById('chartServicios'), {
-  type: 'bar',
-  data: {
-    labels: serviciosLabels,
-    datasets: [{
-      label: 'Órdenes',
-      data: serviciosValues,
-      backgroundColor: ['#1abc9c', '#3498db', '#9b59b6', '#f39c12', '#e74c3c']
-    }]
-  },
-  options: { responsive: true, plugins: { legend: { display: false } } }
+new Chart(document.getElementById('serviciosChart'), {
+    type: 'bar',
+    data: {
+        labels: serviciosLabels,
+        datasets: [{
+            label: 'Órdenes',
+            data: serviciosValues
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        }
+    }
 });
 
-new Chart(document.getElementById('chartPagos'), {
-  type: 'doughnut',
-  data: {
-    labels: pagosLabels,
-    datasets: [{
-      data: pagosValues,
-      backgroundColor: ['#16a085', '#2980b9', '#8e44ad', '#d35400', '#c0392b']
-    }]
-  },
-  options: { responsive: true }
+new Chart(document.getElementById('pagosChart'), {
+    type: 'doughnut',
+    data: {
+        labels: pagosLabels,
+        datasets: [{
+            label: 'Ingresos',
+            data: pagosValues
+        }]
+    },
+    options: {
+        responsive: true
+    }
 });
 </script>
 {% endblock %}
