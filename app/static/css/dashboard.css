@@ -1,0 +1,233 @@
+.forecast-box {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.forecast-box h3 {
+    margin-top: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #102033;
+}
+
+.forecast-box ol {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.forecast-box li {
+    margin-bottom: 8px;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.dashboard-wrapper {
+    padding: 24px 12px 45px;
+}
+
+.dashboard-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 34px;
+    margin-bottom: 26px;
+    color: #ffffff;
+    background: linear-gradient(120deg, rgba(4, 33, 54, .90), rgba(0, 137, 167, .78)),
+        url("https://images.pexels.com/photos/3807386/pexels-photo-3807386.jpeg?auto=compress&cs=tinysrgb&w=1600") center center / cover no-repeat;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, .18);
+}
+
+.dashboard-hero h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 800;
+}
+
+.dashboard-hero p {
+    margin-top: 10px;
+    max-width: 720px;
+    font-size: 16px;
+    opacity: .94;
+}
+
+.hero-actions {
+    margin-top: 22px;
+}
+
+.hero-actions a {
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 22px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .08);
+    border: 1px solid #edf1f5;
+}
+
+.stat-card .icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    border-radius: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #ffffff;
+    font-size: 19px;
+    background: linear-gradient(135deg, #008fb3, #00b894);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.stat-card p {
+    margin: 5px 0 0;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.dashboard-section {
+    background: #ffffff;
+    border-radius: 22px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .07);
+    border: 1px solid #edf1f5;
+}
+
+.dashboard-section h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    color: #102033;
+    font-weight: 800;
+    font-size: 22px;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.chart-box {
+    min-height: 320px;
+}
+
+.modules-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(170px, 1fr));
+    gap: 18px;
+}
+
+.module-card {
+    display: block;
+    padding: 22px;
+    border-radius: 20px;
+    background: #f8fafc;
+    border: 1px solid #edf1f5;
+    text-decoration: none !important;
+    color: #0f172a;
+    transition: all .18s ease;
+}
+
+.module-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, .12);
+    background: #ffffff;
+}
+
+.module-card i {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    border-radius: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    color: #ffffff;
+    font-size: 18px;
+    background: linear-gradient(135deg, #1f6feb, #00b894);
+}
+
+.module-card strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.module-card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.table-modern {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table-modern th {
+    color: #475569;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.table-modern td {
+    vertical-align: middle !important;
+}
+
+.badge-alerta {
+    background: #ef4444;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 999px;
+}
+
+.badge-ok {
+    background: #10b981;
+    color: white;
+    padding: 5px 9px;
+    border-radius: 999px;
+}
+
+@media (max-width: 1100px) {
+    .stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-grid,
+    .modules-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .stat-grid,
+    .chart-grid,
+    .modules-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-hero {
+        padding: 26px;
+    }
+}
