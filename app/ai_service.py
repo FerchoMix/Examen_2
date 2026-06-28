@@ -2,12 +2,13 @@ from flask import current_app
 
 
 def obtener_repuestos_stock_bajo():
+    from app import db
     from app.models import Repuesto
 
     limite = current_app.config.get("STOCK_ALERT_THRESHOLD", 3)
 
     return (
-        Repuesto.query
+        db.session.query(Repuesto)
         .filter(Repuesto.stock <= limite)
         .order_by(Repuesto.stock.asc())
         .all()
