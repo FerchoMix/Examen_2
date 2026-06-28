@@ -1,4 +1,5 @@
 import json
+from flask import flash, request
 from decimal import Decimal
 
 from flask_appbuilder import BaseView, ModelView, expose, has_access
@@ -15,6 +16,7 @@ from app.models import (
     Repuesto,
     Servicio,
     Vehiculo,
+    ConsultaIA,
 )
 
 
@@ -221,7 +223,60 @@ class GraficasView(BaseView):
             data,
         )
 
+class ConsultaIAView(ModelView):
+    datamodel = SQLAInterface(ConsultaIA)
+    class_permission_name = 'consultas_ia'
+    list_columns = ['fecha', 'usuario', 'pregunta', 'respuesta']
+    show_columns = ['fecha', 'usuario', 'pregunta', 'respuesta']
+    add_columns = ['pregunta', 'respuesta', 'usuario']
+    edit_columns = ['pregunta', 'respuesta', 'usuario']
+    label_columns = {
+        'fecha': 'Fecha',
+        'pregunta': 'Pregunta',
+        'respuesta': 'Respuesta',
+        'usuario': 'Usuario',
+    }
 
+
+class AsistenteIAView(BaseView):
+    route_base = '/asistente-ia'
+    class_permission_name = 'asistente_ia'
+    method_permission_name = {'index': 'access'}
+    default_view = 'index'
+
+    @expose('/', methods=['GET', 'POST'])
+    @has_access
+    def index(self):
+        from flask_login import current_user
+        from app.ai_service import generar_respuesta_ia
+
+        pregunta = ''
+        respuesta = ''
+
+        if request.method == 'POST':
+            pregunta = request.form.get('pregunta', '').strip()
+
+            if not pregunta:
+                flash('Debes escribir una pregunta para consultar la IA.', 'warning')
+            else:
+                respuesta = generar_respuesta_ia(pregunta)
+
+                consulta = ConsultaIA(
+                    pregunta=pregunta,
+                    respuesta=respuesta,
+                    usuario=getattr(current_user, 'username', 'sistema'),
+                )
+
+                db.session.add(consulta)
+                db.session.commit()
+
+                flash('Consulta guardada en el historial IA.', 'success')
+
+        return self.render_template(
+            'ia/asistente.html',
+            pregunta=pregunta,
+            respuesta=respuesta,
+        )
 appbuilder.add_view(ClienteView, 'Clientes', icon='fa-users', category='Catálogos')
 appbuilder.add_view(VehiculoView, 'Vehículos', icon='fa-car', category='Catálogos')
 appbuilder.add_view(MecanicoView, 'Mecánicos', icon='fa-wrench', category='Catálogos')
@@ -235,6 +290,9 @@ appbuilder.add_view(PagoView, 'Pagos', icon='fa-money', category='Operaciones')
 appbuilder.add_view(ReportesView, 'Reporte de órdenes', icon='fa-file-text', category='Reportes')
 appbuilder.add_link('Reporte de pagos', href='/reportes/pagos/', icon='fa-money', category='Reportes')
 appbuilder.add_link('Reporte de stock', href='/reportes/stock/', icon='fa-warning', category='Reportes')
+
+appbuilder.add_view(AsistenteIAView, 'Asistente IA', icon='fa-magic', category='Inteligencia Artificial')
+appbuilder.add_view(ConsultaIAView, 'Historial IA', icon='fa-comments', category='Inteligencia Artificial')
 
 appbuilder.add_view(GraficasView, 'Gráfica de servicios', icon='fa-bar-chart', category='Gráficas')
 appbuilder.add_link('Gráfica de mecánicos', href='/graficas/mecanicos/', icon='fa-pie-chart', category='Gráficas')
