@@ -3,4 +3,4 @@ flask-sqlalchemy
 email-validator
 PyMySQL
 python-dotenv
-requests
+google-genai

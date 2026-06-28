@@ -24,8 +24,9 @@ AUTH_ROLE_ADMIN = "Admin"
 AUTH_ROLE_PUBLIC = "Public"
 APP_NAME = "Sistema Taller Mecánico"
 APP_THEME = "yeti.css"
-OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+STOCK_ALERT_THRESHOLD = int(os.environ.get("STOCK_ALERT_THRESHOLD", "3"))
 
 # Admin: acceso total automático de Flask-AppBuilder.
 # Supervisor: gestión operativa y reportes/gráficas.

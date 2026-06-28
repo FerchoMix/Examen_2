@@ -1,0 +1,24 @@
+.graph-hero {
+  color: white;
+  padding: 28px;
+  border-radius: 18px;
+  background: linear-gradient(rgba(19, 46, 67, 0.76), rgba(31, 109, 135, 0.76)),
+    url('https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+  margin-bottom: 20px;
+}
+
+.graph-title {
+  margin-top: 0;
+  font-weight: 700;
+}
+
+.graph-subtitle {
+  max-width: 780px;
+}
+
+.graph-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .08);
+  padding: 22px;
+}

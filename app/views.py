@@ -293,6 +293,7 @@ appbuilder.add_link('Reporte de stock', href='/reportes/stock/', icon='fa-warnin
 
 appbuilder.add_view(AsistenteIAView, 'Asistente IA', icon='fa-magic', category='Inteligencia Artificial')
 appbuilder.add_view(ConsultaIAView, 'Historial IA', icon='fa-comments', category='Inteligencia Artificial')
+appbuilder.add_link('Inicio', href='/', icon='fa-home', category='Inicio')
 
 appbuilder.add_view(GraficasView, 'Gráfica de servicios', icon='fa-bar-chart', category='Gráficas')
 appbuilder.add_link('Gráfica de mecánicos', href='/graficas/mecanicos/', icon='fa-pie-chart', category='Gráficas')

@@ -2,7 +2,7 @@ from datetime import date, datetime
 from decimal import Decimal
 
 from flask_appbuilder import Model
-from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String, Text
+from sqlalchemy import Column, Date, DateTime, ForeignKey, Integer, Numeric, String, Text
 from sqlalchemy.orm import relationship
 
 

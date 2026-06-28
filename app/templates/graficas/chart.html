@@ -1,38 +1,28 @@
 {% extends "appbuilder/base.html" %}
+
 {% block head_css %}
 {{ super() }}
-<style>
-.graph-hero {
-  color: white;
-  padding: 28px;
-  border-radius: 18px;
-  background: linear-gradient(rgba(19, 46, 67, 0.76), rgba(31, 109, 135, 0.76)),
-    url('https://images.pexels.com/photos/3807329/pexels-photo-3807329.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
-  margin-bottom: 20px;
-}
-.graph-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 10px 24px rgba(0,0,0,.08);
-  padding: 22px;
-}
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/graficas.css') }}">
 {% endblock %}
+
 {% block content %}
 <div class="container-fluid">
   <div class="graph-hero">
-    <h2 style="margin-top:0; font-weight:700;">{{ titulo }}</h2>
-    <p style="max-width:780px;">{{ subtitulo }}</p>
+    <h2 class="graph-title">{{ titulo }}</h2>
+    <p class="graph-subtitle">{{ subtitulo }}</p>
     <span class="label label-info">Elementos graficados: {{ total_items }}</span>
   </div>
+
   <div class="graph-card">
     <canvas id="mainChart" height="110"></canvas>
   </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 const labels = {{ labels|safe }};
 const values = {{ values|safe }};
+
 new Chart(document.getElementById('mainChart'), {
   type: '{{ chart_type }}',
   data: {
